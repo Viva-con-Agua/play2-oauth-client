@@ -1,4 +1,4 @@
-package scala.org.vivaconagua.play2OauthClient.drops
+package org.vivaconagua.play2OauthClient.drops
 
 import javax.inject.Inject
 

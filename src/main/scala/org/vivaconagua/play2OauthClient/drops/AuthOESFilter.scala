@@ -1,4 +1,4 @@
-package scala.org.vivaconagua.play2OauthClient.drops
+package org.vivaconagua.play2OauthClient.drops
 
 import javax.inject._
 import scala.language.postfixOps
@@ -8,7 +8,7 @@ import com.mohiva.play.silhouette.api.Silhouette //LogoutEvent
 import scala.concurrent.Future //ExecutionContext
 import scala.concurrent.duration._
 //import scala.concurrent.ExecutionContext.Implicits.global
-import scala.org.vivaconagua.play2OauthClient.silhouette.CookieEnv
+import org.vivaconagua.play2OauthClient.silhouette.CookieEnv
 
 //import javax.inject._
 

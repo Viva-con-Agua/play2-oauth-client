@@ -1,4 +1,4 @@
-package scala.org.vivaconagua.play2OauthClient.silhouette
+package org.vivaconagua.play2OauthClient.silhouette
 
 import com.mohiva.play.silhouette.api.Env
 import com.mohiva.play.silhouette.impl.authenticators.SessionAuthenticator

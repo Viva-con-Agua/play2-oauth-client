@@ -1,9 +1,9 @@
-package scala.org.vivaconagua.play2OauthClient.drops
+package org.vivaconagua.play2OauthClient.drops
 
 import javax.inject._
 import play.api.inject.ApplicationLifecycle
 import java.util.{Properties, UUID}
-import scala.org.vivaconagua.play2OauthClient.silhouette.User
+import org.vivaconagua.play2OauthClient.silhouette.User
 
 import org.nats._
 import akka.actor._
@@ -127,7 +127,7 @@ class AuthOESHandler @Inject() (conf : Configuration) extends Actor with Timers 
   private var loggedOutUserIds : List[UUID] = Nil
 
   // Time until a users ID will be deleted from loggedOutUserIds
-  val sessionTimeout : Long = conf.getMillis("silhoutte.authenticator.authenticatorIdleTimeout")//.getOrElse(60000 * 10)
+  val sessionTimeout : Long = conf.getMillis("silhouette.authenticator.authenticatorIdleTimeout")//.getOrElse(60000 * 10)
 
   /**
     * Handler for different messages.
@@ -147,8 +147,13 @@ class AuthOESHandler @Inject() (conf : Configuration) extends Actor with Timers 
       this.loggedOutUserIds = this.loggedOutUserIds.filter(_ != id)
     }
     case IsLoggedOut(user: User) => {
+      val isLoggedOut = this.loggedOutUserIds.contains(user.uuid)
+      if(isLoggedOut) {
+        // release the saved UUID, because otherwise you can run in a deadlock if somebody tries to re-login
+        timers.startSingleTimer(ReleaseTimerKey(user.uuid), ReleaseLogout(user.uuid), Duration(0, MILLISECONDS))
+      }
       // answer the question if the given user is logged out
-      sender() ! this.loggedOutUserIds.contains(user.uuid)
+      sender() ! isLoggedOut
     }
   }
 }

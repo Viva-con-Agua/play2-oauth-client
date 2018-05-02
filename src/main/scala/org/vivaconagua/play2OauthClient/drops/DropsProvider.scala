@@ -1,4 +1,4 @@
-package scala.org.vivaconagua.play2OauthClient.drops
+package org.vivaconagua.play2OauthClient.drops
 
 import com.mohiva.play.silhouette.api.LoginInfo
 import com.mohiva.play.silhouette.api.util.HTTPLayer

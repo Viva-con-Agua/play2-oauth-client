@@ -1,4 +1,4 @@
-package scala.org.vivaconagua.play2OauthClient.silhouette
+package org.vivaconagua.play2OauthClient.silhouette
 
 import javax.inject._
 
@@ -40,7 +40,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 import daos.UserDAO
 import daos.drops.UserDropsDAO
-import scala.org.vivaconagua.play2OauthClient.drops.{DropsProvider,DropsSecuredErrorHandler}
+import org.vivaconagua.play2OauthClient.drops.{DropsProvider,DropsSecuredErrorHandler}
 
 /** Sets up custom components for Play, including a social provider that handles the OAuth2 handshake with Drops.
   *

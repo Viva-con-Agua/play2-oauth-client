@@ -1,4 +1,4 @@
-package scala.org.vivaconagua.play2OauthClient.silhouette
+package org.vivaconagua.play2OauthClient.silhouette
 
 import play.api.libs.json._
 

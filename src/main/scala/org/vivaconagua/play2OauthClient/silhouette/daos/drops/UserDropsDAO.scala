@@ -1,4 +1,4 @@
-package scala.org.vivaconagua.play2OauthClient.silhouette.daos.drops
+package org.vivaconagua.play2OauthClient.silhouette.daos.drops
 
 import java.util.UUID
 import javax.inject.Inject
@@ -7,8 +7,8 @@ import scala.concurrent.Future
 //import scala.concurrent.duration._
 //import scala.concurrent.ExecutionContext
 import play.api.Configuration
-import scala.org.vivaconagua.play2OauthClient.silhouette.daos.UserDAO
-import scala.org.vivaconagua.play2OauthClient.silhouette.User
+import org.vivaconagua.play2OauthClient.silhouette.daos.UserDAO
+import org.vivaconagua.play2OauthClient.silhouette.User
 import play.api.libs.ws._
 import play.api.libs.json._
 import play.api.Logger

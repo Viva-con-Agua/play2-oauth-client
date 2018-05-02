@@ -1,4 +1,4 @@
-package scala.org.vivaconagua.play2OauthClient.controller
+package org.vivaconagua.play2OauthClient.controller
 
 import com.mohiva.play.silhouette.api.{Silhouette,LoginEvent}
 import com.mohiva.play.silhouette.api.exceptions.{ProviderException,AuthenticatorException,CryptoException}
@@ -6,12 +6,12 @@ import com.mohiva.play.silhouette.api.repositories.AuthInfoRepository
 import com.mohiva.play.silhouette.impl.providers._
 import com.mohiva.play.silhouette.impl.providers.state._
 //import com.mohiva.play.silhouette.impl.exceptions._
-import scala.org.vivaconagua.play2OauthClient.silhouette.UserService
-import scala.org.vivaconagua.play2OauthClient.silhouette.daos.drops.{UserDAOHTTPMethodException,UserDAONetworkException}
+import org.vivaconagua.play2OauthClient.silhouette.UserService
+import org.vivaconagua.play2OauthClient.silhouette.daos.drops.{UserDAOHTTPMethodException,UserDAONetworkException}
 //import scala.org.vivaconagua.play2OauthClient.silhouette.AccessToken
 
-import scala.org.vivaconagua.play2OauthClient.silhouette.CookieEnv
-import scala.org.vivaconagua.play2OauthClient.drops.DropsSocialProfileBuilder
+import org.vivaconagua.play2OauthClient.silhouette.CookieEnv
+import org.vivaconagua.play2OauthClient.drops.DropsSocialProfileBuilder
 
 import scala.concurrent.Future
 
