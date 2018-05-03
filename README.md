@@ -197,5 +197,7 @@ Todo
 
 ## ChangeLog
 
-### Version 0.2.0 (2018-04-26)
-* Todo
+### Version 0.2.0 (2018-05-03)
+
+* [[F] - Session management](https://github.com/Viva-con-Agua/play2-oauth-client/issues/2)
+* [[F] - OAuth2 Drops Client](https://github.com/Viva-con-Agua/play2-oauth-client/issues/1)
