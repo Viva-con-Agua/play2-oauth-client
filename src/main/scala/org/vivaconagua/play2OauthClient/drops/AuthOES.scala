@@ -69,6 +69,10 @@ class OESConnection(authOESActor: ActorRef, conf : Configuration) {
     connection.subscribe("LOGOUT", (msg: Msg) =>
       authOESActor ! AuthOESHandler.AuthLogout(UUID.fromString(msg.body))
     )
+    // subscribes the LOGOUT event. The handler parses the body as UUID and sends an AuthLogout event containing the UUID.
+    connection.subscribe("USER.DELETE", (msg: Msg) =>
+      authOESActor ! AuthOESHandler.UserDelete(UUID.fromString(msg.body))
+    )
     Some(connection)
   }
 
@@ -90,6 +94,7 @@ class OESConnection(authOESActor: ActorRef, conf : Configuration) {
 object AuthOESHandler {
   def props = Props[AuthOESHandler]
 
+  case class AuthLogoutTimerKey(id: UUID)
   /**
     * Represents a LOGOUT event, received using nats.
     *
@@ -97,6 +102,14 @@ object AuthOESHandler {
     * @param id identifies the user that has logged out.
     */
   case class AuthLogout(id: UUID)
+
+  /**
+    * Represents a USER.DELETE event, received using nats.
+    *
+    * @author Johann Sell
+    * @param id identifies the user that has been deleted.
+    */
+  case class UserDelete(id: UUID)
 
   case class ReleaseTimerKey(id: UUID)
   case class ReleaseLogout(id: UUID)
@@ -142,6 +155,10 @@ class AuthOESHandler @Inject() (conf : Configuration) extends Actor with Timers 
 
       // assume a logout after x milliseconds
       timers.startSingleTimer(ReleaseTimerKey(id), ReleaseLogout(id), Duration(sessionTimeout, MILLISECONDS))
+    }
+    case UserDelete(id: UUID) => {
+      // if a user has been deleted, s/he has to be logged out
+      timers.startSingleTimer(AuthLogoutTimerKey(id), AuthLogout(id), Duration(0, MILLISECONDS))
     }
     case ReleaseLogout(id : UUID) => {
       this.loggedOutUserIds = this.loggedOutUserIds.filter(_ != id)
