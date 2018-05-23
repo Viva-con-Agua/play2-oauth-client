@@ -49,9 +49,21 @@ Now you have to add the following routes to your  `conf/routes` file. These rout
 client in order to fulfill the OAuth2 handshake with the social provider [Drops](https://github.com/Viva-con-Agua/drops):
 ```scala
 
-GET        /authenticate/:provider controllers.DropsController.authenticate(provider, route: Option[String])
-POST       /authenticate/:provider controllers.DropsController.authenticate(provider, route: Option[String] = None)
+GET        /authenticate/:provider  controllers.DropsController.authenticate(provider, route: Option[String])
+POST       /authenticate/:provider  controllers.DropsController.authenticate(provider, route: Option[String] = None)
 ```
+Furthermore, if you implement a JavaScript WebApp, you can add the following route to your `routes` file:
+```scala
+
+GET        /identity                controllers.DropsController.frontendLogin
+```
+If your user has a valid session with [Drops](https://github.com/Viva-con-Agua/drops), you will receive:
+```json
+{
+  "uuid": "<your-users-uuid>"
+}
+```
+
 
 Since play2-oauth-client has to communicate with your [nats](https://nats.io/) message broker and [Drops](https://github.com/Viva-con-Agua/drops)
 you have to add the following lines to your `conf/application.conf`:
@@ -106,8 +118,9 @@ Todo
 
 ## ChangeLog
 
-### Version 0.3.0 (2018-05-04)
+### Version 0.4.0 (2018-05-23)
 
+* [[F] #6 - Secured Action frontend login](https://github.com/Viva-con-Agua/play2-oauth-client/issues/6)
 * [[F] #3 - OES OAuth client](https://github.com/Viva-con-Agua/play2-oauth-client/issues/3)
 * [[F] #2 - Session management](https://github.com/Viva-con-Agua/play2-oauth-client/issues/2)
 * [[F] #1 - OAuth2 Drops Client](https://github.com/Viva-con-Agua/play2-oauth-client/issues/1)

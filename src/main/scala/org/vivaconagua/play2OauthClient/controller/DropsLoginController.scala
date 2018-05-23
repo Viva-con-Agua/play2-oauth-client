@@ -20,7 +20,7 @@ import play.api.mvc._
 //import play.api.libs.ws._
 import play.api._
 
-//import play.api.libs.json._
+import play.api.libs.json._
 
 import play.api.i18n.{ I18nSupport, Messages }
 
@@ -101,5 +101,9 @@ trait DropsLoginController extends AbstractController with I18nSupport {
         Future.successful(Redirect(dropsLogin).flashing("error" -> Messages("silhouette.error.could.not.authenticate")))
       }
     })
+  }
+
+  def frontendLogin = silhouette.SecuredAction.async { implicit request =>
+    Future.successful(Ok(Json.toJson(request.identity)))
   }
 }
