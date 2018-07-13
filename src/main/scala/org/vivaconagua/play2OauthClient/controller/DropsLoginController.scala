@@ -50,10 +50,8 @@ trait DropsLoginController extends AbstractController with I18nSupport {
     (socialProviderRegistry.get[SocialProvider](provider) match {
       case Some(p: SocialStateProvider with DropsSocialProfileBuilder) => {
         val state = route.map((r) => UserStateItem(Map("route" -> r))).getOrElse(UserStateItem(Map()))
-        /**
-          * Generate a new provider considering the `ajax` flag, used to signal [Drops] how to handle the case of no
-          * authorized user (`Redirect` or JSON error message)
-          */
+        // Generate a new provider considering the `ajax` flag, used to signal [Drops] how to handle the case of no
+        // authorized user (`Redirect` or JSON error message)
         val provider = (p match {
           case dropsP : DropsProvider => dropsP.withSettings(settings =>
             ajax.map((flag) => settings.copy(authorizationParams = Map("ajax" -> flag.toString()))).getOrElse(settings)
