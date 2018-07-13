@@ -49,8 +49,8 @@ Now you have to add the following routes to your  `conf/routes` file. These rout
 client in order to fulfill the OAuth2 handshake with the social provider [Drops](https://github.com/Viva-con-Agua/drops):
 ```scala
 
-GET        /authenticate/:provider  controllers.DropsController.authenticate(provider, route: Option[String])
-POST       /authenticate/:provider  controllers.DropsController.authenticate(provider, route: Option[String] = None)
+GET        /authenticate/:provider  controllers.DropsController.authenticate(provider, route: Option[String], ajax: Option[Boolean])
+POST       /authenticate/:provider  controllers.DropsController.authenticate(provider, route: Option[String], ajax: Option[Boolean])
 ```
 Furthermore, if you implement a JavaScript WebApp, you can add the following route to your `routes` file:
 ```scala

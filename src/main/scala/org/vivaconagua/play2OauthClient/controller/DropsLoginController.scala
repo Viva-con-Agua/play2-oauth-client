@@ -6,6 +6,8 @@ import com.mohiva.play.silhouette.api.repositories.AuthInfoRepository
 import com.mohiva.play.silhouette.impl.providers._
 import com.mohiva.play.silhouette.impl.providers.state._
 //import com.mohiva.play.silhouette.impl.exceptions._
+//import com.mohiva.play.silhouette.api.actions.SecuredErrorHandler
+import org.vivaconagua.play2OauthClient.drops.DropsProvider
 import org.vivaconagua.play2OauthClient.silhouette.UserService
 import org.vivaconagua.play2OauthClient.silhouette.daos.drops.{UserDAOHTTPMethodException,UserDAONetworkException}
 //import scala.org.vivaconagua.play2OauthClient.silhouette.AccessToken
@@ -44,14 +46,20 @@ trait DropsLoginController extends AbstractController with I18nSupport {
     * @param provider The ID of the provider to authenticate against.
     * @return The result to display.
     */
-  def authenticate(provider: String, route: Option[String]) = Action.async { implicit request =>
+  def authenticate(provider: String, route: Option[String], ajax: Option[Boolean]) = Action.async { implicit request =>
     (socialProviderRegistry.get[SocialProvider](provider) match {
       case Some(p: SocialStateProvider with DropsSocialProfileBuilder) => {
         val state = route.map((r) => UserStateItem(Map("route" -> r))).getOrElse(UserStateItem(Map()))
-        p.authenticate(state).flatMap {
+        val provider = (p match {
+          case dropsP : DropsProvider => dropsP.withSettings(settings =>
+            ajax.map((flag) => settings.copy(authorizationParams = Map("ajax" -> flag.toString()))).getOrElse(settings)
+          )
+          case _ => p
+        })
+        provider.authenticate(state).flatMap {
           case Left(result) => Future.successful(result)
           case Right(StatefulAuthInfo(authInfo, userState)) => for {
-            profile <- p.retrieveProfile(authInfo)
+            profile <- provider.retrieveProfile(authInfo)
             user <- userService.retrieve(profile.loginInfo)
             authInfo <- authInfoRepository.save(profile.loginInfo, authInfo)
             authenticator <- silhouette.env.authenticatorService.create(profile.loginInfo)
@@ -103,7 +111,37 @@ trait DropsLoginController extends AbstractController with I18nSupport {
     })
   }
 
-  def frontendLogin = silhouette.SecuredAction.async { implicit request =>
-    Future.successful(Ok(Json.toJson(request.identity)))
+  def frontendLogin = silhouette.UserAwareAction.async { implicit request =>
+    request.identity match {
+      case Some(user) => Future.successful(Ok(Json.toJson(user)))
+      case _ => Future.successful(Redirect(this.redirectToDrops(request, true)))
+    }
   }
+
+  def redirectToDrops(request : RequestHeader, ajax: Boolean) =
+    conf.get[String]("ms.host") + conf.get[String]("ms.entrypoint") + "?route=" + request.uri + "&ajax=" + ajax
+
+//  /**
+//    * A local error handler.
+//    */
+//  val errorHandler = new SecuredErrorHandler {
+//    override def onNotAuthenticated(implicit request: RequestHeader) = {
+//      Future.successful(Unauthorized(Json.obj(
+//        "http_error_code" -> 401,
+//        "internal_error_code" -> JsString("401." + conf.get[String]("ms.name") + ".OAuth2Plugin"),
+//        "msg" -> "Currently, there is no authenticated user.",
+//        "msg_i18n" -> "error.oauth2.not.authenticated",
+//        "additional_information" -> Json.obj()
+//      )))
+//    }
+//    override def onNotAuthorized(implicit request: RequestHeader) = {
+//      Future.successful(Forbidden(Json.obj(
+//        "http_error_code" -> 403,
+//        "internal_error_code" -> JsString("403." + conf.get[String]("ms.name") + ".OAuth2Plugin"),
+//        "msg" -> "Currently, there is no authorized user.",
+//        "msg_i18n" -> "error.oauth2.not.authorized",
+//        "additional_information" -> Json.obj()
+//      )))
+//    }
+//  }
 }

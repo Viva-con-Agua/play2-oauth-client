@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.5",
   organization := "org.vivaconagua",
-  version      := "0.4.0"
+  version      := "0.4.1-SNAPSHOT"
 )
 
 val silhouetteVersion = "5.0.2"
@@ -62,8 +62,17 @@ publishMavenStyle := true
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
+  val profileM = sonatypeStagingRepositoryProfile.?.value
   if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
+  else {
+//    val staged = profileM map { stagingRepoProfile =>
+//      "releases" at nexus +
+//        "service/local/staging/deployByRepositoryId/" +
+//        stagingRepoProfile.repositoryId
+//    }
+//
+//    staged.orElse(Some("releases" at nexus + "service/local/staging/deploy/maven2"))
     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+  }
 }
