@@ -11,7 +11,7 @@ Resolve the library from Sonatype in your `build.sbt`:
 ```scala
 resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
 
-libraryDependencies += "org.vivaconagua" %% "play2-oauth-client" % "0.2.0"
+libraryDependencies += "org.vivaconagua" %% "play2-oauth-client" % "0.4.1"
 ```
 
 You have to use the lib in a controller. You can simply implement the `DropsLoginController` trait:
@@ -49,9 +49,11 @@ Now you have to add the following routes to your  `conf/routes` file. These rout
 client in order to fulfill the OAuth2 handshake with the social provider [Drops](https://github.com/Viva-con-Agua/drops):
 ```scala
 
-GET        /authenticate/:provider  controllers.DropsController.authenticate(provider, route: Option[String])
-POST       /authenticate/:provider  controllers.DropsController.authenticate(provider, route: Option[String] = None)
+GET        /authenticate/:provider  controllers.DropsController.authenticate(provider, route: Option[String], ajax: Option[Boolean])
+POST       /authenticate/:provider  controllers.DropsController.authenticate(provider, route: Option[String], ajax: Option[Boolean])
 ```
+
+### WebApps
 Furthermore, if you implement a JavaScript WebApp, you can add the following route to your `routes` file:
 ```scala
 
@@ -63,7 +65,20 @@ If your user has a valid session with [Drops](https://github.com/Viva-con-Agua/d
   "uuid": "<your-users-uuid>"
 }
 ```
+Otherwise, you will receive a JSON encoded error message using the following format:
+```json
+{
+  "http_error_code": 401,
+  "internal_error_code": "401.OAuth2Server",
+  "msg": "Currently, there is no authenticated user.",
+  "msg_i18n": "error.oauth2.not.authenticated",
+  "additional_information": {
+    "oauth2_client": "<a microservice identifier>"
+  }
+}
+```
 
+### Auth OES
 
 Since play2-oauth-client has to communicate with your [nats](https://nats.io/) message broker and [Drops](https://github.com/Viva-con-Agua/drops)
 you have to add the following lines to your `conf/application.conf`:
@@ -79,6 +94,8 @@ drops.client_secret="<your_ms_secret>" // the secret that has been configured in
 
 play.filters.enabled += org.vivaconagua.play2OauthClient.drops.AuthOESFilter
 ```
+
+### Example implementation
 
 An example controller using the implemented authentification:
 
@@ -118,8 +135,9 @@ Todo
 
 ## ChangeLog
 
-### Version 0.4.0 (2018-05-23)
+### Version 0.4.1 (2018-07-13)
 
+* [[I] #8 - Frontend ajax request handling](https://github.com/Viva-con-Agua/play2-oauth-client/issues/8)
 * [[F] #6 - Secured Action frontend login](https://github.com/Viva-con-Agua/play2-oauth-client/issues/6)
 * [[F] #3 - OES OAuth client](https://github.com/Viva-con-Agua/play2-oauth-client/issues/3)
 * [[F] #2 - Session management](https://github.com/Viva-con-Agua/play2-oauth-client/issues/2)

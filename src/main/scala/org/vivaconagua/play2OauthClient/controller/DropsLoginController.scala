@@ -6,6 +6,8 @@ import com.mohiva.play.silhouette.api.repositories.AuthInfoRepository
 import com.mohiva.play.silhouette.impl.providers._
 import com.mohiva.play.silhouette.impl.providers.state._
 //import com.mohiva.play.silhouette.impl.exceptions._
+//import com.mohiva.play.silhouette.api.actions.SecuredErrorHandler
+import org.vivaconagua.play2OauthClient.drops.DropsProvider
 import org.vivaconagua.play2OauthClient.silhouette.UserService
 import org.vivaconagua.play2OauthClient.silhouette.daos.drops.{UserDAOHTTPMethodException,UserDAONetworkException}
 //import scala.org.vivaconagua.play2OauthClient.silhouette.AccessToken
@@ -44,14 +46,24 @@ trait DropsLoginController extends AbstractController with I18nSupport {
     * @param provider The ID of the provider to authenticate against.
     * @return The result to display.
     */
-  def authenticate(provider: String, route: Option[String]) = Action.async { implicit request =>
+  def authenticate(provider: String, route: Option[String], ajax: Option[Boolean]) = Action.async { implicit request =>
     (socialProviderRegistry.get[SocialProvider](provider) match {
       case Some(p: SocialStateProvider with DropsSocialProfileBuilder) => {
         val state = route.map((r) => UserStateItem(Map("route" -> r))).getOrElse(UserStateItem(Map()))
-        p.authenticate(state).flatMap {
+        /**
+          * Generate a new provider considering the `ajax` flag, used to signal [Drops] how to handle the case of no
+          * authorized user (`Redirect` or JSON error message)
+          */
+        val provider = (p match {
+          case dropsP : DropsProvider => dropsP.withSettings(settings =>
+            ajax.map((flag) => settings.copy(authorizationParams = Map("ajax" -> flag.toString()))).getOrElse(settings)
+          )
+          case _ => p
+        })
+        provider.authenticate(state).flatMap {
           case Left(result) => Future.successful(result)
           case Right(StatefulAuthInfo(authInfo, userState)) => for {
-            profile <- p.retrieveProfile(authInfo)
+            profile <- provider.retrieveProfile(authInfo)
             user <- userService.retrieve(profile.loginInfo)
             authInfo <- authInfoRepository.save(profile.loginInfo, authInfo)
             authenticator <- silhouette.env.authenticatorService.create(profile.loginInfo)
@@ -103,7 +115,30 @@ trait DropsLoginController extends AbstractController with I18nSupport {
     })
   }
 
-  def frontendLogin = silhouette.SecuredAction.async { implicit request =>
-    Future.successful(Ok(Json.toJson(request.identity)))
+  /**
+    * JSON interface to request the currently logged in user. If there is no user session, the `Action` will intiate the
+    * OAuth2 handshake with [Drops] by redirecting to [DropsLoginController.authenticate] with `ajax` flag set to `true`.
+    * Thus, [Drops] knows to send a JSON error instead of redirecting to a login page, if there is also no authorized
+    * user.
+    *
+    * @author Johannn Sell
+    * @return
+    */
+  def frontendLogin = silhouette.UserAwareAction.async { implicit request =>
+    request.identity match {
+      case Some(user) => Future.successful(Ok(Json.toJson(user)))
+      case _ => Future.successful(Redirect(this.redirectToDrops(request, true)))
+    }
   }
+
+  /**
+    * Generates the URL to initate the OAuth2 handshake.
+    *
+    * @author Johann Sell
+    * @param request is used to redirect the user back to the originaly requested page after a successful handshake.
+    * @param ajax indicates, if a login screen has to be shown or a JSON error message is needed as response.
+    * @return
+    */
+  def redirectToDrops(request : RequestHeader, ajax: Boolean) =
+    conf.get[String]("ms.host") + conf.get[String]("ms.entrypoint") + "?route=" + request.uri + "&ajax=" + ajax
 }
