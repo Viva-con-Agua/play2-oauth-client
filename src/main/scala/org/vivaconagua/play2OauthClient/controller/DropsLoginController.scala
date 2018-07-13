@@ -50,6 +50,10 @@ trait DropsLoginController extends AbstractController with I18nSupport {
     (socialProviderRegistry.get[SocialProvider](provider) match {
       case Some(p: SocialStateProvider with DropsSocialProfileBuilder) => {
         val state = route.map((r) => UserStateItem(Map("route" -> r))).getOrElse(UserStateItem(Map()))
+        /**
+          * Generate a new provider considering the `ajax` flag, used to signal [Drops] how to handle the case of no
+          * authorized user (`Redirect` or JSON error message)
+          */
         val provider = (p match {
           case dropsP : DropsProvider => dropsP.withSettings(settings =>
             ajax.map((flag) => settings.copy(authorizationParams = Map("ajax" -> flag.toString()))).getOrElse(settings)
@@ -111,6 +115,15 @@ trait DropsLoginController extends AbstractController with I18nSupport {
     })
   }
 
+  /**
+    * JSON interface to request the currently logged in user. If there is no user session, the `Action` will intiate the
+    * OAuth2 handshake with [Drops] by redirecting to [DropsLoginController.authenticate] with `ajax` flag set to `true`.
+    * Thus, [Drops] knows to send a JSON error instead of redirecting to a login page, if there is also no authorized
+    * user.
+    *
+    * @author Johannn Sell
+    * @return
+    */
   def frontendLogin = silhouette.UserAwareAction.async { implicit request =>
     request.identity match {
       case Some(user) => Future.successful(Ok(Json.toJson(user)))
@@ -118,30 +131,14 @@ trait DropsLoginController extends AbstractController with I18nSupport {
     }
   }
 
+  /**
+    * Generates the URL to initate the OAuth2 handshake.
+    *
+    * @author Johann Sell
+    * @param request is used to redirect the user back to the originaly requested page after a successful handshake.
+    * @param ajax indicates, if a login screen has to be shown or a JSON error message is needed as response.
+    * @return
+    */
   def redirectToDrops(request : RequestHeader, ajax: Boolean) =
     conf.get[String]("ms.host") + conf.get[String]("ms.entrypoint") + "?route=" + request.uri + "&ajax=" + ajax
-
-//  /**
-//    * A local error handler.
-//    */
-//  val errorHandler = new SecuredErrorHandler {
-//    override def onNotAuthenticated(implicit request: RequestHeader) = {
-//      Future.successful(Unauthorized(Json.obj(
-//        "http_error_code" -> 401,
-//        "internal_error_code" -> JsString("401." + conf.get[String]("ms.name") + ".OAuth2Plugin"),
-//        "msg" -> "Currently, there is no authenticated user.",
-//        "msg_i18n" -> "error.oauth2.not.authenticated",
-//        "additional_information" -> Json.obj()
-//      )))
-//    }
-//    override def onNotAuthorized(implicit request: RequestHeader) = {
-//      Future.successful(Forbidden(Json.obj(
-//        "http_error_code" -> 403,
-//        "internal_error_code" -> JsString("403." + conf.get[String]("ms.name") + ".OAuth2Plugin"),
-//        "msg" -> "Currently, there is no authorized user.",
-//        "msg_i18n" -> "error.oauth2.not.authorized",
-//        "additional_information" -> Json.obj()
-//      )))
-//    }
-//  }
 }
