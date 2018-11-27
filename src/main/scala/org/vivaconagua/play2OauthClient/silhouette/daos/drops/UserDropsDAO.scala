@@ -1,7 +1,9 @@
 package org.vivaconagua.play2OauthClient.silhouette.daos.drops
 
 import java.util.UUID
+
 import javax.inject.Inject
+import org.vivaconagua.play2OauthClient.silhouette.{GeneralRole, SpecialRole}
 
 import scala.concurrent.Future
 //import scala.concurrent.duration._
@@ -46,11 +48,34 @@ class UserDropsDAO @Inject() (ws: WSClient, conf : Configuration) extends UserDA
     }
   }
 
-  private def toUser(json: JsValue) : User =
+  private def toUser(json: JsValue) : User = {
+    val userRoles = (json \ "roles").validate[List[JsValue]].asOpt match {
+      case Some(list) => list.map((role) => (role \ "role").validate[String].asOpt match {
+        case Some(r) => Some(GeneralRole(r))
+        case _ => None
+      }).filter(_.isDefined).map(_.get)
+      case _ => Nil
+    }
+    val supporterRoles = (json \ "profiles").validate[List[JsValue]].asOpt match {
+      case Some(list) => list.flatMap((profile) =>
+        (profile \ "supporter" \ "roles").validate[List[JsValue]].asOpt match {
+          case Some(l) => l.map((role) => {
+            SpecialRole(
+              name = (role \ "name").as[String],
+              crewName = (role \ "crew" \ "name").validate[String].asOpt,
+              pillar = (role \ "pillar" \ "name").validate[String].asOpt
+            )
+          })
+          case _ => Nil
+        })
+      case _ => Nil
+    }
+
     User(
-      uuid = (json \ "id").as[UUID] //,
-//      email = (json \\ "email").map(_.as[String]).toSet
+      uuid = (json \ "id").as[UUID],
+      roles = userRoles ++ supporterRoles
     )
+  }
 }
 
 case class UserDAOHTTPMethodException(method: String, cause: Throwable = null) extends
