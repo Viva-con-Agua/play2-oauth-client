@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.5",
   organization := "org.vivaconagua",
-  version      := "0.4.3"
+  version      := "0.4.3-play27"
 )
 
 val silhouetteVersion = "5.0.2"
@@ -22,7 +22,9 @@ lazy val root = (project in file("."))
 //      "com.google.inject.extensions" % "guice-assistedinject" % "4.2.0",
 //      "com.sandinh" %% "akka-guice" % "3.2.0",
       "com.iheart" %% "ficus" % "1.4.3",
-      "net.codingwell" %% "scala-guice" % "4.1.1"
+      "net.codingwell" %% "scala-guice" % "4.1.1",
+      "org.apache.commons" % "commons-lang3" % "3.8.1",
+      "com.typesafe.play" %% "play-json" % "2.7.1"
     ),
     scalacOptions ++= Seq(
       "-deprecation", // Emit warning and location for usages of deprecated APIs.
