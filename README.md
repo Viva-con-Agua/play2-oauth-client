@@ -135,7 +135,7 @@ Todo
 
 ## ChangeLog
 
-### Version 0.4.1 (2018-07-13)
+### Version 0.4.4 (2019-04-09)
 
 * [[I] #8 - Frontend ajax request handling](https://github.com/Viva-con-Agua/play2-oauth-client/issues/8)
 * [[F] #6 - Secured Action frontend login](https://github.com/Viva-con-Agua/play2-oauth-client/issues/6)

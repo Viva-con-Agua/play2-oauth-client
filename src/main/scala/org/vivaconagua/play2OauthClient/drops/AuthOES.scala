@@ -66,11 +66,11 @@ class OESConnection(authOESActor: ActorRef, conf : Configuration) {
   private def init(authOESActor: ActorRef) = {
     val connection = Conn.connect(this.opts)
     // subscribes the LOGOUT event. The handler parses the body as UUID and sends an AuthLogout event containing the UUID.
-    connection.subscribe("LOGOUT", (msg: Msg) =>
+    connection.subscribe("drops.user.logout", (msg: Msg) =>
       authOESActor ! AuthOESHandler.AuthLogout(UUID.fromString(msg.body))
     )
     // subscribes the LOGOUT event. The handler parses the body as UUID and sends an AuthLogout event containing the UUID.
-    connection.subscribe("USER.DELETE", (msg: Msg) =>
+    connection.subscribe("drops.user.deleted", (msg: Msg) =>
       authOESActor ! AuthOESHandler.UserDelete(UUID.fromString(msg.body))
     )
     Some(connection)
