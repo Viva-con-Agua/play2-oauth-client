@@ -66,6 +66,5 @@ class AuthOESFilter @Inject() (authOES: AuthOES, silhouette: Silhouette[CookieEn
 
     action(request).run
   }
-
 //  override def mat = mat
 }
