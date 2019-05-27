@@ -63,7 +63,7 @@ class UserDropsDAO @Inject() (ws: WSClient, conf : Configuration) extends UserDA
             SpecialRole(
               name = (role \ "name").as[String],
               crewName = (role \ "crew" \ "name").validate[String].asOpt,
-              pillar = (role \ "pillar" \ "name").validate[String].asOpt
+              pillar = (role \ "pillar" \ "pillar").validate[String].asOpt
             )
           })
           case _ => Nil
