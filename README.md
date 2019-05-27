@@ -7,13 +7,27 @@ implements an additional [Object-Event-System (OES)](http://wiki.vivaconagua.org
 [nats](https://nats.io/) message broker.
 
 ## Usage
+### Resolve dependencies Play 2.7.x
+Resolve the library from Sonatype in your `build.sbt`:
+```scala
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("public"),
+  Resolver.bintrayRepo("scalaz", "releases")
+)
+
+libraryDependencies += "org.vivaconagua" %% "play2-oauth-client" % "0.4.4-play27"
+// it's important to handle this by your application while play2-oauth-client is using scala_nats
+libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.8.1"
+```
+### Resolve dependencies Play 2.5.x and 2.6.x
 Resolve the library from Sonatype in your `build.sbt`:
 ```scala
 resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
 
-libraryDependencies += "org.vivaconagua" %% "play2-oauth-client" % "0.4.1"
+libraryDependencies += "org.vivaconagua" %% "play2-oauth-client" % "0.4.3-play25"
 ```
 
+### Implement a controller
 You have to use the lib in a controller. You can simply implement the `DropsLoginController` trait:
 ```scala
 package controllers
