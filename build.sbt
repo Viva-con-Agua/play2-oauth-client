@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.5",
   organization := "org.vivaconagua",
-  version      := "0.4.3-play27"
+  version      := "0.4.4-play27"
 )
 
 val silhouetteVersion = "5.0.2"
@@ -23,7 +23,7 @@ lazy val root = (project in file("."))
 //      "com.sandinh" %% "akka-guice" % "3.2.0",
       "com.iheart" %% "ficus" % "1.4.3",
       "net.codingwell" %% "scala-guice" % "4.1.1",
-      "org.apache.commons" % "commons-lang3" % "3.8.1",
+//      "org.apache.commons" % "commons-lang3" % "3.8.1", // has to be maintained by all play applications using this lib
       "com.typesafe.play" %% "play-json" % "2.7.1"
     ),
     scalacOptions ++= Seq(
@@ -75,6 +75,6 @@ publishTo := {
 //    }
 //
 //    staged.orElse(Some("releases" at nexus + "service/local/staging/deploy/maven2"))
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+    Some("releases" at nexus + "service/local/staging/deploy/maven2")
   }
 }
