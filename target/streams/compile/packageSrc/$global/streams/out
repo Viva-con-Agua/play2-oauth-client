@@ -1,0 +1,37 @@
+[0m[[0m[0minfo[0m] [0m[0mPackaging /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/target/scala-2.12/play2-oauth-client_2.12-0.4.3-sources.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/silhouette/SessionEnv.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/silhouette/SessionEnv.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/silhouette/AccessToken.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/silhouette/AccessToken.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/silhouette/CustomUnsecuredErrorHandler.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/silhouette/CustomUnsecuredErrorHandler.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/silhouette/User.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/silhouette/User.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/silhouette/daos/UserDAO.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/silhouette/daos/UserDAO.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/drops/DropsSecuredErrorHandler.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/drops/DropsSecuredErrorHandler.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/controller/DropsLoginController.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/controller/DropsLoginController.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/drops/AuthOES.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/drops/AuthOES.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/silhouette/UserService.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/silhouette/UserService.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/silhouette/SilhouetteModule.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/silhouette/SilhouetteModule.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	messages[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/resources/messages[0m
+[0m[[0m[0mdebug[0m] [0m[0m	reference.conf[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/resources/reference.conf[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/silhouette/daos/drops/UserDropsDAO.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/silhouette/daos/drops/UserDropsDAO.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/drops/DropsProvider.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/drops/DropsProvider.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/silhouette/CustomSecuredErrorHandler.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/silhouette/CustomSecuredErrorHandler.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/silhouette/CookieEnv.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/silhouette/CookieEnv.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	org/vivaconagua/play2OauthClient/drops/AuthOESFilter.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/src/main/scala/org/vivaconagua/play2OauthClient/drops/AuthOESFilter.scala[0m
+[0m[[0m[0minfo[0m] [0m[0mDone packaging.[0m

@@ -62,6 +62,7 @@ class UserDropsDAO @Inject() (ws: WSClient, conf : Configuration) extends UserDA
           case Some(l) => l.map((role) => {
             SpecialRole(
               name = (role \ "name").as[String],
+              crewId = (role \ "crew" \ "id").validate[String].asOpt,
               crewName = (role \ "crew" \ "name").validate[String].asOpt,
               pillar = (role \ "pillar" \ "pillar").validate[String].asOpt
             )

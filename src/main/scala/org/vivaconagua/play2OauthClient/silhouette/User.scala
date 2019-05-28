@@ -27,7 +27,7 @@ case class GeneralRole(name: String) extends Role
 object GeneralRole {
   implicit val generalRoleJsonFormat = Json.format[GeneralRole]
 }
-case class SpecialRole(name: String, crewName: Option[String], pillar: Option[String]) extends Role
+case class SpecialRole(name: String, crewId:Option[String], crewName: Option[String], pillar: Option[String]) extends Role
 object SpecialRole {
   implicit val specialRoleJsonFormat = Json.format[SpecialRole]
 }

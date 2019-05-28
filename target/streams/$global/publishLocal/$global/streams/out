@@ -1,0 +1,10 @@
+[0m[[0m[0minfo[0m] [0m[0m:: delivering :: org.vivaconagua#play2-oauth-client_2.12;0.4.3 :: 0.4.3 :: release :: Tue May 28 14:55:38 CEST 2019[0m
+[0m[[0m[0mdebug[0m] [0m[0m	options = status=release pubdate=Tue May 28 14:55:38 CEST 2019 validate=true resolveDynamicRevisions=true merge=true resolveId=null pubBranch=null[0m
+[0m[[0m[0minfo[0m] [0m[0m	delivering ivy file to /home/dls/Workspace/VcA/Pool/play2Oauth/crewID/play2-oauth-client/target/scala-2.12/ivy-0.4.3.xml[0m
+[0m[[0m[0mdebug[0m] [0m[0m	deliver done (16ms)[0m
+[0m[[0m[0mdebug[0m] [0m[0mlocal do not support transaction. ivy pattern does not use revision as a directory[0m
+[0m[[0m[0minfo[0m] [0m[0m	published play2-oauth-client_2.12 to /home/dls/.ivy2/local/org.vivaconagua/play2-oauth-client_2.12/0.4.3/poms/play2-oauth-client_2.12.pom[0m
+[0m[[0m[0minfo[0m] [0m[0m	published play2-oauth-client_2.12 to /home/dls/.ivy2/local/org.vivaconagua/play2-oauth-client_2.12/0.4.3/jars/play2-oauth-client_2.12.jar[0m
+[0m[[0m[0minfo[0m] [0m[0m	published play2-oauth-client_2.12 to /home/dls/.ivy2/local/org.vivaconagua/play2-oauth-client_2.12/0.4.3/srcs/play2-oauth-client_2.12-sources.jar[0m
+[0m[[0m[0minfo[0m] [0m[0m	published play2-oauth-client_2.12 to /home/dls/.ivy2/local/org.vivaconagua/play2-oauth-client_2.12/0.4.3/docs/play2-oauth-client_2.12-javadoc.jar[0m
+[0m[[0m[0minfo[0m] [0m[0m	published ivy to /home/dls/.ivy2/local/org.vivaconagua/play2-oauth-client_2.12/0.4.3/ivys/ivy.xml[0m
