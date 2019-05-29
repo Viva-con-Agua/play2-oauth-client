@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.5",
   organization := "org.vivaconagua",
-  version      := "0.4.5-play27"
+  version      := "0.4.6-play27"
 )
 
 val silhouetteVersion = "5.0.2"
