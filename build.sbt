@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   scalaVersion := "2.12.5",
   organization := "org.vivaconagua",
-  version      := "0.4.5-play25"
+  version      := "0.4.6-play25"
 )
 
 val silhouetteVersion = "5.0.2"
@@ -18,9 +18,9 @@ lazy val root = (project in file("."))
       "com.mohiva" %% "play-silhouette-persistence" % silhouetteVersion,
       "com.github.tyagihas" % "scala_nats_2.11" % "0.3.0",
       "com.typesafe.play" %% "play-guice" % "2.6.13",
-//      "com.google.inject" % "guice" % "4.2.0",
-//      "com.google.inject.extensions" % "guice-assistedinject" % "4.2.0",
-//      "com.sandinh" %% "akka-guice" % "3.2.0",
+      //      "com.google.inject" % "guice" % "4.2.0",
+      //      "com.google.inject.extensions" % "guice-assistedinject" % "4.2.0",
+      //      "com.sandinh" %% "akka-guice" % "3.2.0",
       "com.iheart" %% "ficus" % "1.4.3",
       "net.codingwell" %% "scala-guice" % "4.1.1"
     ),
@@ -73,6 +73,6 @@ publishTo := {
 //    }
 //
 //    staged.orElse(Some("releases" at nexus + "service/local/staging/deploy/maven2"))
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+    Some("releases" at nexus + "service/local/staging/deploy/maven2")
   }
 }
