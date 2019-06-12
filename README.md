@@ -144,7 +144,28 @@ class HomeController @Inject()(
 }
 ```
 
-## How it works
+### Authorization
+Currently, a role-based access control (RbAC) is implemented for the Pool². Using it requires basic knowledge about the designed roles:
+* __Supporter__: Everyone is a supporter.
+* __Employee__: Everyone who is employee of Viva con Agua (e.V, Wasser, Goldeimer, Stiftung or Arts create Water).
+* __Admin__: Group with controling rights for the technical system Pool².
+* __Volunteer Manager__: All the supporter volunteering as managers of their crew. Thus, the group of users can be 
+separated by their crews, but also by their area of responsability (so called `pillar`). There are four areas of responsibility:
+`finance`, `operation`, `education` and `network`.
+
+The package `org.vivaconagua.play2OauthClient.drops.authorization` allows you to use RbAC to secure your endpoints:
+```scala
+def getAll = silhouette.SecuredAction(
+ (IsVolunteerManager() && IsResponsibleFor("finance")) || IsEmployee || IsAdmin
+).async { request => 
+    ...
+}
+```  
+Only __volunteer manager__ with the responsability for `finance`, __employees__ and __admins__ have access rights for 
+`getAll`. Additionally, you can pass the crews UUID or name to the `VolunteerManager()` instance. Thus, an action will
+be accessable only for __employees__, __admins__ and __Volunteer Managers__ of the given crew.  
+
+## Hows it works
 Todo
 
 ## ChangeLog
