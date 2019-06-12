@@ -15,7 +15,7 @@ resolvers ++= Seq(
   Resolver.bintrayRepo("scalaz", "releases")
 )
 
-libraryDependencies += "org.vivaconagua" %% "play2-oauth-client" % "0.4.4-play27"
+libraryDependencies += "org.vivaconagua" %% "play2-oauth-client" % "0.4.7-play27"
 // it's important to handle this by your application while play2-oauth-client is using scala_nats
 libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.8.1"
 ```
@@ -24,7 +24,7 @@ Resolve the library from Sonatype in your `build.sbt`:
 ```scala
 resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
 
-libraryDependencies += "org.vivaconagua" %% "play2-oauth-client" % "0.4.3-play25"
+libraryDependencies += "org.vivaconagua" %% "play2-oauth-client" % "0.4.6-play25"
 ```
 
 ### Implement a controller
