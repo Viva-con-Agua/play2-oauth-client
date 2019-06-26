@@ -32,7 +32,31 @@ object SpecialRole {
   implicit val specialRoleJsonFormat = Json.format[SpecialRole]
 }
 
-case class User(uuid: UUID, roles: List[Role]) extends Identity
+case class User(uuid: UUID, roles: List[Role]) extends Identity {
+
+  private def getSpecialRole = this.roles.find(_.name == "VolunteerManager").flatMap(_ match {
+    case vm : SpecialRole => Some(vm)
+    case _ => None
+  })
+
+  private def checkPillar(pillar: String) = this.getSpecialRole match {
+    case Some(special) => special.pillar.exists(_ == pillar)
+    case None => false
+  }
+
+  def isVolunteerManager = this.roles.filter(_.name == "VolunteerManager").nonEmpty
+  def isAdmin = this.roles.filter(_.name == "admin").nonEmpty
+  def isEmployee = this.roles.filter(_.name == "employee").nonEmpty
+
+  def isOnlyVolunteer = isVolunteerManager && !(isAdmin || isEmployee)
+
+  def isFinance = checkPillar("finance")
+  def isAction = checkPillar("operation")
+  def isNetwork = checkPillar("network")
+  def isEducation = checkPillar("education")
+
+  def getCrew : Option[UUID] = this.getSpecialRole.flatMap(_.crewId)
+}
 
 object User {
   implicit val userFormat : Format[User] = Json.format[User]

@@ -109,6 +109,24 @@ drops.client_secret="<your_ms_secret>" // the secret that has been configured in
 play.filters.enabled += org.vivaconagua.play2OauthClient.drops.AuthOESFilter
 ```
 
+### User API
+You can check the users roles by the following functions:
+```scala
+def isVolunteerManager : Boolean // returns true, if the user is a volunteer manager
+def isAdmin : Boolean // returns true, if the user is an admin
+def isEmployee : Boolean // returns true, if the user is an employee
+
+def isOnlyVolunteer : Boolean // returns true, if the user is a volunteer manager and no employee or admin
+
+def isFinance : Boolean // returns true, if the user is a volunteer manager for finances
+def isAction : Boolean // returns true, if the user is a volunteer manager for events
+def isNetwork : Boolean // returns true, if the user is a volunteer manager for network
+def isEducation : Boolean // returns true, if the user is a volunteer manager for education
+
+def getCrew : Option[UUID] // returns the crews UUID
+```
+You can call these checks directly at the users instance: `request.identity.isEmployee`.
+
 ### Example implementation
 
 An example controller using the implemented authentification:
